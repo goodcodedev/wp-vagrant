@@ -29,9 +29,15 @@ sudo mv wp-cli.phar /usr/local/bin/wp
 
 sudo mysql -u root -e "\
     create database wordpress;\
-    create user wordpress@'localhost' identified by 'wppass';\
-    grant all privileges on wordpress.* to wordpress@'localhost';\
+    create user wordpress@'%' identified by 'wppass';\
+    grant all privileges on wordpress.* to wordpress@'%';\
     flush privileges;"
+
+# allow external connections
+sudo sh -c 'echo "
+[mysqld]
+bind-address = 0.0.0.0
+" >> /etc/mysql/my.cnf'
 
 sudo chown -R www-data:www-data /var/www
 sudo usermod -a -G www-data vagrant
