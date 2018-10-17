@@ -1,0 +1,9 @@
+{
+    "name": "Vagrant debug",
+    "type": "php",
+    "request": "launch",
+    "pathMappings": {
+        "/var/www/html": "${workspaceRoot}/wp"
+    },
+    "port": 9000
+}
