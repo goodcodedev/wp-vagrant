@@ -22,6 +22,9 @@ xdebug.remote_connect_back = 1
 " >> /etc/php/7.0/apache2/php.ini'
 popd
 rm xdebug-2.6.1.tgz
+rm -rf xdebug-2.6.1
+# Not sure what this file is (it's info about xdebug)
+rm package.xml
 
 curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 chmod +x wp-cli.phar
@@ -44,10 +47,4 @@ sudo usermod -a -G www-data vagrant
 sudo chmod -R g+w /var/www
 
 # login again for group to take effect
-sudo su - vagrant
-
-pushd /var/www/html
-wp core download
-wp core config --dbname=wordpress --dbuser=wordpress --dbpass=wppass --dbhost=localhost --dbprefix=wp_
-wp core install --url="http://192.168.33.10" --title="Localhost" --admin_user="admin" --admin_password="pass" --admin_email="gudmund@goodcode.no"
-popd
+echo "== Login again for group to take effect =="

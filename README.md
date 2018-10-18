@@ -2,8 +2,12 @@
 Simple box that sets up LAMP with xdebug.
 
 ## Install on vagrant box
-Go to `cd vagrant`, run `vagrant up`, then `vagrant ssh` into machine and run `source /vagrant/install.sh`.
-You'll be asked to set up mysql password during install. Currently the script assumes no mysql password.
+* Go to `cd vagrant`
+* Run `vagrant up`
+* Then `vagrant ssh` into machine
+* And run `source /vagrant/install.sh`. You'll be asked to set up mysql password during install. Currently the script assumes no mysql password, press enter for this.
+* Then `exit` out, and `vagrant ssh` in again for group permissions to register
+* Run `source /vagrant/install-wp.sh`
 
 ## Vs-code
 Tested with `PHP IntelliSense` and `PHP debug` plugin by Felix Becker.
