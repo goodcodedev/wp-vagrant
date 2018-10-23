@@ -6,15 +6,8 @@ Vagrant.configure("2") do |config|
 
   # config.vm.box_check_update = false
 
-  # Create a forwarded port mapping which allows access to a specific port
-  # within the machine from a port on the host machine. In the example below,
-  # accessing "localhost:8080" will access port 80 on the guest machine.
-  # NOTE: This will enable public access to the opened port
-  # config.vm.network "forwarded_port", guest: 80, host: 8080
-
-  # Create a forwarded port mapping which allows access to a specific port
-  # within the machine from a port on the host machine and only allow access
-  # via 127.0.0.1 to disable public access
+  # Forwarding 9000 for xdebug and 3306 for mysql, and restricting
+  # access to localhost, 127.0.0.1
   config.vm.network "forwarded_port", guest: 9000, host: 9000, host_ip: "127.0.0.1"
   config.vm.network "forwarded_port", guest: 3306, host: 3306, host_ip: "127.0.0.1"
 
@@ -25,11 +18,6 @@ Vagrant.configure("2") do |config|
   # your network.
   # config.vm.network "public_network"
 
-  # Share an additional folder to the guest VM. The first argument is
-  # the path on the host to the actual folder. The second argument is
-  # the path on the guest to mount the folder. And the optional third
-  # argument is a set of non-required options.
-  # config.vm.synced_folder "../data", "/vagrant_data"
   config.vm.synced_folder "../wp", "/var/www/html",
     id: "wp-root", owner: "www-data", group: "www-data",
     create: true, mount_options: ["dmode=775,fmode=664"]

@@ -2,6 +2,8 @@ sudo upt-get update
 sudo apt-get install -y apache2 apache2-utils
 sudo systemctl enable apache2
 sudo systemctl start apache2
+# Mysql will ask for root password in an interactive manner.
+# This blocks running this script through vagrant file.
 sudo apt-get install -y mysql-client mysql-server
 sudo apt-get install -y php7.0 php7.0-mysql libapache2-mod-php7.0 php7.0-cli php7.0-cgi php7.0-gd
 
@@ -32,14 +34,17 @@ sudo mv wp-cli.phar /usr/local/bin/wp
 
 sudo mysql -u root -e "\
     create database wordpress;\
+    ALTER DATABASE wordpress CHARACTER SET utf8 COLLATE utf8_general_ci;\
     create user wordpress@'%' identified by 'wppass';\
     grant all privileges on wordpress.* to wordpress@'%';\
     flush privileges;"
 
 # allow external connections
+# ZERO_DATEs are required by wordpress, these are stripped from default modes
 sudo sh -c 'echo "
 [mysqld]
 bind-address = 0.0.0.0
+sql-mode="ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION"
 " >> /etc/mysql/my.cnf'
 
 sudo chown -R www-data:www-data /var/www
