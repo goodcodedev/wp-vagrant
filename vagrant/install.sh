@@ -1,11 +1,19 @@
 sudo upt-get update
 sudo apt-get install -y apache2 apache2-utils
+sudo a2enmod rewrite
+
+# Allow .htaccess
+sudo sh -c 'echo "
+<Directory /var/www/html/>
+    AllowOverride All
+</Directory>
+" >> /etc/apache2/apache2.conf'
+
 sudo systemctl enable apache2
-sudo systemctl start apache2
 # Mysql will ask for root password in an interactive manner.
 # This blocks running this script through vagrant file.
 sudo apt-get install -y mysql-client mysql-server
-sudo apt-get install -y php7.0 php7.0-mysql libapache2-mod-php7.0 php7.0-cli php7.0-cgi php7.0-gd
+sudo apt-get install -y php7.0 php7.0-mysql libapache2-mod-php7.0 php7.0-cli php7.0-cgi php-imagick php7.0-gd
 
 sudo apt-get install -y php7.0-dev
 curl -O -L http://xdebug.org/files/xdebug-2.6.1.tgz
@@ -50,6 +58,9 @@ sql-mode="ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_A
 sudo chown -R www-data:www-data /var/www
 sudo usermod -a -G www-data vagrant
 sudo chmod -R g+w /var/www
+
+# Start apache
+sudo systemctl start apache2
 
 # login again for group to take effect
 echo "== Login again for group to take effect =="
